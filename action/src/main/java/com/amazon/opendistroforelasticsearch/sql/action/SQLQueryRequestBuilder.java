@@ -13,5 +13,16 @@
  *   permissions and limitations under the License.
  */
 
-rootProject.name = 'opendistro-sql'
-include 'action'
+package com.amazon.opendistroforelasticsearch.sql.action;
+
+import org.elasticsearch.action.Action;
+import org.elasticsearch.action.ActionRequestBuilder;
+import org.elasticsearch.action.ActionResponse;
+import org.elasticsearch.client.ElasticsearchClient;
+
+public class SQLQueryRequestBuilder extends ActionRequestBuilder<SQLQueryRequest, ActionResponse, SQLQueryRequestBuilder> {
+
+    protected SQLQueryRequestBuilder(final ElasticsearchClient client, final Action<SQLQueryRequest, ActionResponse, SQLQueryRequestBuilder> action, final SQLQueryRequest request) {
+        super(client, action, request);
+    }
+}

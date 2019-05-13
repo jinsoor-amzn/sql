@@ -162,6 +162,8 @@ dependencies {
     // testCompile group: 'com.alibaba', name: 'fastjson', version:'1.2.56'
     // testCompile group: 'org.mockito', name: 'mockito-core', version:'2.23.4'
     testCompile group: "org.elasticsearch.client", name: 'transport', version: "${es_version}"
+
+    compile project(":action")
 }
 
 apply plugin: 'nebula.ospackage'

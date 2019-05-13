@@ -15,8 +15,11 @@
 
 package com.amazon.opendistroforelasticsearch.sql.plugin;
 
+import com.amazon.opendistroforelasticsearch.sql.action.SQLAction;
 import com.amazon.opendistroforelasticsearch.sql.executor.AsyncRestExecutor;
 import com.amazon.opendistroforelasticsearch.sql.esdomain.LocalClusterState;
+import org.elasticsearch.action.ActionRequest;
+import org.elasticsearch.action.ActionResponse;
 import org.elasticsearch.client.Client;
 import org.elasticsearch.cluster.metadata.IndexNameExpressionResolver;
 import org.elasticsearch.cluster.node.DiscoveryNodes;
@@ -31,6 +34,7 @@ import org.elasticsearch.common.xcontent.NamedXContentRegistry;
 import org.elasticsearch.env.Environment;
 import org.elasticsearch.env.NodeEnvironment;
 import org.elasticsearch.plugins.ActionPlugin;
+import org.elasticsearch.plugins.ExtensiblePlugin;
 import org.elasticsearch.plugins.Plugin;
 import org.elasticsearch.rest.RestController;
 import org.elasticsearch.rest.RestHandler;
@@ -59,6 +63,10 @@ public class SqlPlug extends Plugin implements ActionPlugin {
 		return "Use sql to query elasticsearch.";
 	}
 
+
+	@Override public List<ActionHandler<? extends ActionRequest, ? extends ActionResponse>> getActions() {
+		return Collections.singletonList(new ActionPlugin.ActionHandler(SQLAction.INSTANCE, SQLTransportAction.class));
+	}
 
 	@Override
 	public List<RestHandler> getRestHandlers(Settings settings, RestController restController, ClusterSettings clusterSettings, IndexScopedSettings indexScopedSettings, SettingsFilter settingsFilter, IndexNameExpressionResolver indexNameExpressionResolver, Supplier<DiscoveryNodes> nodesInCluster) {
